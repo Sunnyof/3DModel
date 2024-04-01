@@ -3,6 +3,9 @@ package com.sun.webview
 import android.Manifest
 import android.app.Activity
 import android.content.ContentResolver
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.wifi.p2p.WifiP2pManager.NetworkInfoListener
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -15,13 +18,13 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.Toast
+import com.sun.base.BaseActivity
 import com.sun.webview.util.FileBase64
 import com.sun.webview.util.TripleDES
 import java.io.InputStreamReader
-import java.net.NetworkInterface
 
 
-class MainActivity : Activity() {
+open class MainActivity : BaseActivity() {
 
 // region Value
 
@@ -64,10 +67,11 @@ class MainActivity : Activity() {
         window.decorView.setOnSystemUiVisibilityChangeListener { i: Int -> hideBottomUI() }
     }
 
+
 // endregion
 
     // --- 初始化 ---
-    fun initView() {
+    private fun initView() {
         loadFile("page1", "")
         initWebView("")
         //loadFile( "index", "html5-webgl-galaxy/" )
@@ -332,8 +336,6 @@ class MainActivity : Activity() {
             contentResolver,
             Settings.System.SCREEN_BRIGHTNESS, light
         )
-
-        NetworkInterface
     }
 
     private fun setScreenManualMode() {
